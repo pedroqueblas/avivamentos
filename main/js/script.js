@@ -1,40 +1,38 @@
-const form = document.getElementById("form");
-const lista = document.getElementById("lista");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-let dados = JSON.parse(localStorage.getItem("jantar-lista")) || [];
+const firebaseConfig = {
+  apiKey: "AIzaSyA7LGUjilFIRXzj8jECrbgODMkQmoOpzJw",
+  authDomain: "avivamentos-53c6c.firebaseapp.com",
+  projectId: "avivamentos-53c6c",
+  storageBucket: "avivamentos-53c6c.firebasestorage.app",
+  messagingSenderId: "94723879230",
+  appId: "1:94723879230:web:de0dad5ba3b62f7d967c6f",
+  measurementId: "G-B63PB5B60H"
+};
 
-function atualizarLista() {
-  lista.innerHTML = "";
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  dados.forEach((item, index) => {
-    const li = document.createElement("li");
-
-    li.innerHTML = `
-      <span><strong>${item.nome}</strong> — ${item.item}</span>
-      <button class="remove-btn" onclick="remover(${index})">X</button>
-    `;
-
+async function carregar(){
+  const query = await getDocs(collection(db,"itens"));
+  const lista=document.getElementById('lista');
+  lista.innerHTML="";
+  query.forEach(doc=>{
+    const d=doc.data();
+    let li=document.createElement("li");
+    li.textContent = d.nome + " — " + d.item;
     lista.appendChild(li);
   });
-
-  localStorage.setItem("jantar-lista", JSON.stringify(dados));
 }
 
-form.addEventListener("submit", (e) => {
+document.getElementById("form").addEventListener("submit",async e=>{
   e.preventDefault();
+  const nome=document.getElementById("nome").value;
+  const item=document.getElementById("item").value;
 
-  const nome = document.getElementById("nome").value;
-  const item = document.getElementById("item").value;
-
-  dados.push({ nome, item });
-  atualizarLista();
-
-  form.reset();
+  await addDoc(collection(db,"itens"),{nome,item});
+  carregar();
 });
 
-function remover(i) {
-  dados.splice(i, 1);
-  atualizarLista();
-}
-
-atualizarLista();
+carregar();
