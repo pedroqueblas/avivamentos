@@ -14,25 +14,33 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function carregar(){
-  const query = await getDocs(collection(db,"itens"));
-  const lista=document.getElementById('lista');
-  lista.innerHTML="";
-  query.forEach(doc=>{
-    const d=doc.data();
-    let li=document.createElement("li");
-    li.textContent = d.nome + " — " + d.item;
+// Carregar itens da coleção
+async function carregar() {
+  const querySnapshot = await getDocs(collection(db, "itens"));
+  const lista = document.getElementById("lista");
+
+  lista.innerHTML = ""; 
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const li = document.createElement("li");
+    li.innerHTML = `<strong>${data.nome}</strong> — ${data.item}`;
     lista.appendChild(li);
   });
 }
 
-document.getElementById("form").addEventListener("submit",async e=>{
+// Enviar dados
+document.getElementById("form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const nome=document.getElementById("nome").value;
-  const item=document.getElementById("item").value;
+  
+  const nome = document.getElementById("nome").value;
+  const item = document.getElementById("item").value;
 
-  await addDoc(collection(db,"itens"),{nome,item});
+  await addDoc(collection(db, "itens"), { nome, item });
+
+  document.getElementById("form").reset();
   carregar();
 });
 
+// Carregar ao iniciar
 carregar();
