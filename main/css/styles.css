@@ -1,0 +1,252 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ============================== */
+/*      FUNDO CELESTIAL           */
+/* ============================== */
+body {
+  overflow-x: hidden;
+  background: #e6efff;
+}
+
+.fundo-animado {
+  position: fixed;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1500&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.45;
+  z-index: -1;
+}
+
+/* animação de luz suave */
+.fundo-animado::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at -20% -20%, rgba(255,255,255,0.6), transparent 60%);
+  animation: luz 8s infinite alternate ease-in-out;
+}
+
+@keyframes luz {
+  0% { transform: translate(0,0); opacity: 0.4; }
+  100% { transform: translate(20%,20%); opacity: 0.8; }
+}
+
+
+/* ============================== */
+/*           CONTAINER            */
+/* ============================== */
+
+.container {
+  max-width: 650px;
+  margin: 40px auto;
+  background: #ffffffdd;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border: 2px solid #d4af37;
+  backdrop-filter: blur(6px);
+  position: relative;
+}
+
+/* Cruz decorativa */
+.container::before {
+  content: "✝";
+  position: absolute;
+  font-size: 50px;
+  color: #d4af3777;
+  top: -20px;
+  right: -20px;
+  transform: rotate(10deg);
+}
+
+
+/* ============================== */
+/*        VERSÍCULO BÍBLICO       */
+/* ============================== */
+
+.versiculo {
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 20px;
+  background: #fff7da;
+  padding: 12px 15px;
+  border-left: 6px solid #d4af37;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.versiculo span {
+  display: block;
+  margin-top: 5px;
+  font-weight: bold;
+  color: #1f3b73;
+}
+
+
+/* Títulos */
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #1f3b73;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.sub {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #4c6099;
+  font-size: 16px;
+}
+
+/* linha dourada decorativa */
+h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #d4af37;
+  margin: 8px auto 0 auto;
+  border-radius: 3px;
+}
+
+
+/* ============================== */
+/*            FORMULÁRIO          */
+/* ============================== */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+input {
+  padding: 14px;
+  font-size: 17px;
+  border-radius: 10px;
+  border: 1px solid #c6d0e8;
+  outline: none;
+  transition: 0.2s;
+  background: #f8fbff;
+}
+
+input:focus {
+  border-color: #1f3b73;
+  box-shadow: 0 0 8px rgba(31, 59, 115, 0.25);
+}
+
+button {
+  padding: 14px;
+  background: #1f3b73;
+  color: white;
+  font-size: 17px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #27478f;
+}
+
+
+/* ============================== */
+/*              LISTA             */
+/* ============================== */
+
+h2 {
+  color: #1f3b73;
+  margin-bottom: 15px;
+  border-left: 6px solid #d4af37;
+  padding-left: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  background: #fff9e6;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-left: 6px solid #d4af37;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+li span {
+  font-size: 16px;
+  color: #1f3b73;
+}
+
+.remove-btn {
+  background: #b80f0a;
+  color: white;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.remove-btn:hover {
+  background: #8f0c08;
+}
+
+
+/* ============================== */
+/*       RESPONSIVIDADE MOBILE    */
+/* ============================== */
+
+@media (max-width: 480px) {
+
+  .container {
+    margin: 20px 10px;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .sub {
+    font-size: 14px;
+  }
+
+  input,
+  button {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .remove-btn {
+    align-self: flex-end;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .container::before {
+    font-size: 35px;
+    top: -10px;
+    right: -10px;
+  }
+}
